@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Report</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Report</h1>
+        
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        
+        <h2>Data Overview</h2>
+        <p>Shape: {{ analysis.shape.0 }} rows, {{ analysis.shape.1 }} columns</p>
+        
+        <h3>Sample Data</h3>
+        <table>
+            <thead>
+                <tr>
+                    {% for key in analysis.data_head.0.keys() %}
+                    <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in analysis.data_head %}
+                <tr>
+                    {% for value in row.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Download Report</h2>
+        <form action="/report" method="post">
+            <input type="hidden" name="analysis_id" value="{{ analysis_id }}">
+            <div class="form-group">
+                <label>Format:</label>
+                <select name="report_format">
+                    <option value="xlsx">Excel (.xlsx)</option>
+                    <option value="pdf">PDF (.pdf)</option>
+                </select>
+            </div>
+            <button type="submit">Download Report</button>
+        </form>
+        
+        <h2>Visualizations</h2>
+        <div class="visualizations">
+            {% for viz in analysis.visualizations %}
+            <div class="viz-container">
+                <img src="{{ viz }}" alt="Visualization">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

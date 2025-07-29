@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto Analysis App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Auto Analysis App</h1>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <form action="/analyze" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Upload CSV or Excel File:</label>
+                <input type="file" name="file" id="file" accept=".csv,.xlsx,.xls" required>
+            </div>
+            <button type="submit">Analyze</button>
+        </form>
+    </div>
+</body>
+</html>
